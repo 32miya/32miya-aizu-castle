@@ -2583,6 +2583,9 @@ const SPOTS=[
    text:'藩主が城下から出陣するときの休み所。8月22日、松平容保はここに本陣を置き、白虎隊士中二番隊に戸ノ口原への出陣を命じました。いまも弾痕や刀傷の残る建物が保存されています（距離は縮めています）。',meta:[['8月22日','白虎隊 出陣']]},
   {id:'tonoguchi',name:'戸ノ口原・母成峠',kana:'とのぐちはら・ぼなりとうげ',at:[500,-480],pos:[470,-460],look:[540,20,-540],
    text:'城下から東へ、猪苗代湖のほとりの戸ノ口原と、その北の母成峠。8月21日に母成峠が破られ、22〜23日には戸ノ口原で白虎隊も戦いました（実際は15〜25kmほど離れた所です。ここでは大きく縮めて城の近くに置いています）。',meta:[['8月21日','母成峠の戦い'],['8月22〜23日','戸ノ口原の戦い']]}];
+/* お城さんぽ共通（/oshiro/common/fuda.js の見どころ札・写真モード）へ、名所と自分の位置を知らせる窓口 */
+window.OshiroGame={ spots:()=>spotList(), all:()=>SPOTS, me:()=>({x:P.x,z:P.z,level:P.level,room:!!P.room,walk:P.mode==='walk',tour:typeof tour!=='undefined'&&!!tour.on}), started:()=>typeof started==='undefined'||!!started, warpAt:0 };
+{ const _tp=teleport; teleport=function(s){ window.OshiroGame.warpAt=performance.now(); return _tp.apply(this,arguments); }; }
 function spotList(){ return SPOTS.filter(s=>MODE==='edo'?!s.modernOnly:!s.edoOnly).map(s=>MODE==='edo'&&s.edo?Object.assign({},s,s.edo):s); }
 function areaAt(x,z){ const e=MODE==='edo';
   for(const b of actB()) if(inR(b,x,z,.2)) return b.name;
@@ -3682,6 +3685,7 @@ renderer.domElement.addEventListener('webglcontextlost',e=>{ e.preventDefault();
 })();
 </script>
 <script src="/oshiro/common/goshuin.js"></script>
+<script src="/oshiro/common/fuda.js"></script>
 <!-- oshiro-portal:end -->
 
 </body>
